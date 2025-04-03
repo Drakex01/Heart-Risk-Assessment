@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartRisk Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <h1>HeartRisk Predictor</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#predict">Predict</a></li>
+                <li><a href="#analysis">Analysis</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Heart Disease Risk Prediction Using Machine Learning</h1>
+            <p>An innovative approach to predicting 10-year coronary heart disease risk using the Framingham Heart Study dataset</p>
+            <button id="get-started-btn">Get Started</button>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About the Project</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>This project utilizes machine learning to predict an individual's risk of developing coronary heart disease (CHD) within the next 10 years based on various health metrics. The model was trained on the Framingham Heart Study dataset, one of the most influential studies in cardiovascular disease research.</p>
+                <p>Our logistic regression model analyzes six key risk factors to generate a personalized risk assessment:</p>
+                <ul>
+                    <li><i class="fas fa-calendar-alt"></i> Age</li>
+                    <li><i class="fas fa-venus-mars"></i> Sex</li>
+                    <li><i class="fas fa-smoking"></i> Cigarettes Per Day</li>
+                    <li><i class="fas fa-tint"></i> Total Cholesterol</li>
+                    <li><i class="fas fa-heart"></i> Systolic Blood Pressure</li>
+                    <li><i class="fas fa-candy-cane"></i> Glucose Level</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="./chd.png" alt="CHD Distribution Chart">
+                <p class="caption">Distribution of CHD Risk in the Dataset</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="predict" class="predict">
+        <h2>Predict Your Risk</h2>
+        <div class="form-container">
+            <form id="prediction-form">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" min="20" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sex:</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select</option>
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cigsPerDay">Cigarettes Per Day:</label>
+                    <input type="number" id="cigsPerDay" name="cigsPerDay" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="totChol">Total Cholesterol (mg/dL):</label>
+                    <input type="number" id="totChol" name="totChol" min="100" max="500" required>
+                </div>
+                <div class="form-group">
+                    <label for="sysBP">Systolic Blood Pressure (mmHg):</label>
+                    <input type="number" id="sysBP" name="sysBP" min="80" max="250" required>
+                </div>
+                <div class="form-group">
+                    <label for="glucose">Glucose Level (mg/dL):</label>
+                    <input type="number" id="glucose" name="glucose" min="40" max="400" required>
+                </div>
+                <button type="submit">Calculate Risk</button>
+            </form>
+
+            <div id="result" class="result hidden">
+                <h3>Your Predicted Risk:</h3>
+                <div class="risk-meter">
+                    <div class="risk-gauge">
+                        <div id="risk-needle"></div>
+                    </div>
+                    <div class="risk-labels">
+                        <span>Low</span>
+                        <span>Moderate</span>
+                        <span>High</span>
+                    </div>
+                </div>
+                <p id="risk-percentage">0%</p>
+                <p id="risk-message"></p>
+                <div class="recommendations">
+                    <h4>Recommendations:</h4>
+                    <ul id="recommendations-list"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="analysis" class="analysis">
+        <h2>Model Analysis</h2>
+        <div class="analysis-content">
+            <div class="chart-container">
+                <h3>Feature Importance</h3>
+                <canvas id="featureChart"></canvas>
+            </div>
+            <div class="metrics-container">
+                <h3>Model Performance</h3>
+                <div class="metrics">
+                    <div class="metric">
+                        <h4>Accuracy</h4>
+                        <p id="accuracy-value">85.3%</p>
+                    </div>
+                    <div class="metric">
+                        <h4>Precision</h4>
+                        <p id="precision-value">76.2%</p>
+                    </div>
+                    <div class="metric">
+                        <h4>Recall</h4>
+                        <p id="recall-value">68.4%</p>
+                    </div>
+                </div>
+                <div class="confusion-matrix">
+                    <h4>Confusion Matrix</h4>
+                    <img src="./cf.png" alt="Confusion Matrix">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-heartbeat"></i>
+                <h3>HeartRisk Predictor</h3>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#predict">Predict</a></li>
+                    <li><a href="#analysis">Analysis</a></li>
+                </ul>
+            </div>
+            <div class="disclaimer">
+                <h4>Disclaimer</h4>
+                <p>This tool is for educational purposes only and should not replace professional medical advice. Always consult with a healthcare provider for medical concerns.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 HeartRisk Predictor | College Project</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
